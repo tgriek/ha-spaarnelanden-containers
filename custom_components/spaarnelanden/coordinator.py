@@ -1,18 +1,28 @@
 import re
 import json
-import aiohttp
+import logging
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from .const import DOMAIN
 from .const import URL
 
+_LOGGER = logging.getLogger(__name__)
+
 class SpaarnelandenCoordinator(DataUpdateCoordinator):
-    def __init__(self, hass, container_ids, *args, **kwargs):
+    def __init__(self, hass, container_ids, update_interval=None):
         self.container_ids = set(container_ids)
-        super().__init__(hass, *args, **kwargs)
+        super().__init__(
+            hass,
+            _LOGGER,
+            name=DOMAIN,
+            update_method=self._async_update_data,
+            update_interval=update_interval,
+        )
 
     async def _async_update_data(self):
-        async with aiohttp.ClientSession() as session:
-            async with session.get(URL) as response:
-                html = await response.text()
+        session = async_get_clientsession(self.hass)
+        async with session.get(URL) as response:
+            html = await response.text()
 
         match = re.search(
             r"var oContainerModel\s*=\s*(\[[\s\S]*?\]);",
