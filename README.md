@@ -4,7 +4,7 @@ Home Assistant integration to track filling degree of Spaarnelanden containers.
 
 ## Features
 - UI-based setup wizard
-- Enter one or more container IDs manually
+- Enter one or more container registration numbers manually
 - Comma-separated input (e.g. 150484,20126,20137)
 - 1-click install via HACS
 - No YAML required

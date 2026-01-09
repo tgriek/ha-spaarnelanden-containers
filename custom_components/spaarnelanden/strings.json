@@ -3,9 +3,9 @@
     "step": {
       "user": {
         "title": "Spaarnelanden Containers",
-        "description": "Enter comma-separated container IDs, for example: `150484,20126`.",
+        "description": "Enter comma-separated container registration numbers, for example: `150484,20126`.",
         "data": {
-          "containers": "Container IDs"
+          "containers": "Registration numbers"
         }
       }
     },
