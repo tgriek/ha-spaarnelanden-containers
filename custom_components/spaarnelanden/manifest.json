@@ -1,0 +1,10 @@
+{
+  "domain": "spaarnelanden",
+  "name": "Spaarnelanden Containers",
+  "version": "1.2.0",
+  "documentation": "https://github.com/tgriek/ha-spaarnelanden-containers",
+  "requirements": [],
+  "codeowners": ["@tgriek"],
+  "iot_class": "cloud_polling",
+  "config_flow": true
+}
