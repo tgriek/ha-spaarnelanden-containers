@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Spaarnelanden Containers",
+        "description": "Enter comma-separated container IDs, for example: `150484,20126`.",
+        "data": {
+          "containers": "Container IDs"
+        }
+      }
+    },
+    "error": {
+      "no_containers": "Please enter at least one container ID."
+    },
+    "abort": {
+      "already_configured": "Spaarnelanden is already configured."
+    }
+  }
+}
+
