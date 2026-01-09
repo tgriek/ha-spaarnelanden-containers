@@ -53,8 +53,24 @@ class SpaarnelandenCoordinator(DataUpdateCoordinator):
         except json.JSONDecodeError as err:
             raise UpdateFailed(f"Failed to parse Spaarnelanden container JSON: {err}") from err
 
-        return {
+        all_ids = {str(c.get("iId")) for c in containers if c.get("iId") is not None}
+        filtered = {
             str(c["iId"]): c
             for c in containers
             if str(c.get("iId")) in self.container_ids
         }
+        if not filtered:
+            _LOGGER.warning(
+                "No Spaarnelanden containers matched configured IDs. configured=%s available(sample)=%s total_available=%s",
+                sorted(self.container_ids),
+                sorted(list(all_ids))[:20],
+                len(all_ids),
+            )
+        else:
+            _LOGGER.debug(
+                "Fetched Spaarnelanden containers: matched=%s configured=%s total_available=%s",
+                len(filtered),
+                len(self.container_ids),
+                len(all_ids),
+            )
+        return filtered

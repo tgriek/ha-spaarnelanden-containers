@@ -41,16 +41,24 @@ class SpaarnelandenContainerSensor(CoordinatorEntity[SpaarnelandenCoordinator], 
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
         data = self.coordinator.data.get(self.container_id)
-        if not data:
-            return {}
+        attrs: dict[str, Any] = {
+            "coordinator_last_update_success": self.coordinator.last_update_success,
+        }
+        if not self.coordinator.last_update_success:
+            # Helpful when the coordinator is failing (e.g. HTML format changed, blocked request)
+            attrs["coordinator_last_exception"] = str(self.coordinator.last_exception) if self.coordinator.last_exception else None
 
-        return {
+        if not data:
+            return attrs
+
+        attrs.update({
             "latitude": data.get("dLatitude"),
             "longitude": data.get("dLongitude"),
             "last_emptied": data.get("sDateLastEmptied"),
             "type": data.get("sProductName"),
             "registration_number": data.get("sRegistrationNumber"),
-        }
+        })
+        return attrs
 
     @property
     def device_info(self) -> DeviceInfo:
